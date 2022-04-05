@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./styles.css";
 
 export const useInput = (initialState, validator) => {
   const [value, setValue] = useState(initialState);
