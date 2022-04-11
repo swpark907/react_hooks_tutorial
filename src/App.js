@@ -3,12 +3,15 @@ import { useInput } from './useInput.js'
 import { useTitle } from './useTitle';
 import { useClick } from './useClick';
 import { useConfirm } from './useConfirm';
+import { usePreventLeave } from './usePreventLeave';
 
 export default function App() {
 
   const deleteWord = () => console.log('Deleting');
   const abort = () => console.log('Aborted')
   const confirmData = useConfirm('Are you sure?', deleteWord, abort)
+
+  const {enablePrevent, disablePrevent} = usePreventLeave();
 
   const sayHello = () => {
     console.log('Hello!');
@@ -26,6 +29,8 @@ export default function App() {
       <h1 ref={title}>Hello</h1>
       <input placeholder="Name" {...name} />
       <button onClick={confirmData}>confirm</button>
+      <button onClick={enablePrevent}>Protect</button>
+      <button onClick={disablePrevent}>Unprotect</button>
     </div>
   );
 }
