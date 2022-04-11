@@ -4,8 +4,12 @@ import { useTitle } from './useTitle';
 import { useClick } from './useClick';
 import { useConfirm } from './useConfirm';
 import { usePreventLeave } from './usePreventLeave';
+import { useBeforeLeave } from './useBeforeLeave';
 
 export default function App() {
+
+  const begForLife = () => console.log("Plz don't leave")
+  useBeforeLeave(begForLife);
 
   const deleteWord = () => console.log('Deleting');
   const abort = () => console.log('Aborted')
