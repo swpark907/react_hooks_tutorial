@@ -6,8 +6,13 @@ import { useConfirm } from './useConfirm';
 import { usePreventLeave } from './usePreventLeave';
 import { useBeforeLeave } from './useBeforeLeave';
 import { useFadeIn } from './useFadeIn';
+import { useNetwork } from './useNetwork';
 
 export default function App() {
+  const handleChange = () => {
+    console.log(onLine ? "We just went online" : "We are offline")
+  }
+  const onLine = useNetwork(handleChange);
 
   const begForLife = () => console.log("Plz don't leave")
   useBeforeLeave(begForLife);
@@ -34,6 +39,7 @@ export default function App() {
   return (
     <div className="App">
       <h1 ref={title}>Hello</h1>
+      <h1>{onLine ? 'Online' : 'Offline'}</h1>
       <p {...animation}>Lorem ipsum dolor sit.</p>
       <input placeholder="Name" {...name} />
       <button onClick={confirmData}>confirm</button>
