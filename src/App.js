@@ -1,51 +1,27 @@
-import './App.css';
-import { useInput } from './useInput.js'
-import { useTitle } from './useTitle';
-import { useClick } from './useClick';
-import { useConfirm } from './useConfirm';
-import { usePreventLeave } from './usePreventLeave';
-import { useBeforeLeave } from './useBeforeLeave';
-import { useFadeIn } from './useFadeIn';
-import { useNetwork } from './useNetwork';
+import "./App.css";
+import { useInput } from "./useInput.js";
+import { useTitle } from "./useTitle";
+import { useClick } from "./useClick";
+import { useConfirm } from "./useConfirm";
+import { usePreventLeave } from "./usePreventLeave";
+import { useBeforeLeave } from "./useBeforeLeave";
+import { useFadeIn } from "./useFadeIn";
+import { useNetwork } from "./useNetwork";
+import useAxios from "./useAxios";
 
 export default function App() {
-  const handleChange = () => {
-    console.log(onLine ? "We just went online" : "We are offline")
-  }
-  const onLine = useNetwork(handleChange);
+  const { loading, error, data, refetch } = useAxios({
+    url: "https://api.publicapis.org/entries",
+  });
 
-  const begForLife = () => console.log("Plz don't leave")
-  useBeforeLeave(begForLife);
+  console.log(data);
 
-  const deleteWord = () => console.log('Deleting');
-  const abort = () => console.log('Aborted')
-  const confirmData = useConfirm('Are you sure?', deleteWord, abort)
-
-  const {enablePrevent, disablePrevent} = usePreventLeave();
-
-  const sayHello = () => {
-    console.log('Hello!');
-  }
-  const title = useClick(sayHello)
-
-  const animation = useFadeIn(2, 0.5);
-
-  const validator = (value) => value.length <= 10;
-
-  const name = useInput("Mr.1", validator);
-  const titleUpdater = useTitle('Loading...');
-
-  setTimeout(() => titleUpdater('Home'), 3000);
   return (
     <div className="App">
-      <h1 ref={title}>Hello</h1>
-      <h1>{onLine ? 'Online' : 'Offline'}</h1>
-      <p {...animation}>Lorem ipsum dolor sit.</p>
-      <input placeholder="Name" {...name} />
-      <button onClick={confirmData}>confirm</button>
-      <button onClick={enablePrevent}>Protect</button>
-      <button onClick={disablePrevent}>Unprotect</button>
+      <h1>{data && data.status}</h1>
+      <h2>{loading && "Loading"}</h2>
+
+      <button onClick={refetch}>refetch</button>
     </div>
   );
 }
-
