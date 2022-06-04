@@ -10,10 +10,6 @@ const useAxios = (opts, axiosInstancs = defaultAxios) => {
   });
   const [trigger, setTrigger] = useState(0);
 
-  if (!opts.url) {
-    return;
-  }
-
   const refetch = () => {
     setState({
       ...state,
